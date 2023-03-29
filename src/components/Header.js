@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Logo from "../assests/img/foodVilla.png";
+import { Link } from "react-router-dom";
+import About from "./About";
 
 const loggedInUser = () => {
   //API call to check authentication
@@ -8,11 +11,7 @@ const loggedInUser = () => {
 
 const Title = () => (
   <a href="/">
-    <img
-      className="logo"
-      alt="Logo"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyWeMhSa2GNCHH27wLCMm-EBxnZopGfsFdZ8IsagDEZhTMezVuAnWoxpJTVqDTNxYCrzw&usqp=CAU"
-    />
+    <img className="logo" alt="Logo" src={Logo} />
   </a>
 );
 
@@ -23,9 +22,18 @@ const Header = () => {
       <Title />
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
+          <Link to="/">
+            <li>Home</li>
+          </Link>
+
+          <Link to="/about">
+            <li>About</li>
+          </Link>
+
+          <Link to="/contact">
+            <li>Contact</li>
+          </Link>
+
           <li>Cart</li>
         </ul>
       </div>
