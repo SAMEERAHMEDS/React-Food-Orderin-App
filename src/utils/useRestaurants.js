@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FETCH_MENU_URL } from "../config";
+
 const useRestaurant = (resId) => {
   const [restaurant, setRestaurant] = useState(null);
 
