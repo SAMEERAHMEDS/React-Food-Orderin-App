@@ -1,15 +1,17 @@
 import { restaurantList } from "../config";
 import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { filterData } from "../utils/util";
 import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     getRestaurants();
@@ -37,30 +39,44 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div className="search-container">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search"
-          value={searchText}
-          onChange={(e) => {
-            //e.target.value -> Whatever we type in input box
-            setSearchText(e.target.value);
-          }}
-        />
-        <button
-          className="search-btn"
-          onClick={() => {
-            const data = filterData(searchText, allRestaurants);
-            setFilteredRestaurants(data);
-          }}
-        >
-          Search
-        </button>
+      <div className="w-full h-full flex relative justify-center  mt-4">
+        <div className=" w-[95%] pr-4 flex outline-none rounded-lg lg:w-[60%]">
+          <input
+            type="text"
+            className=" overflow-hidden p-2 m-2 lg:w-[80%]"
+            placeholder="Search your favourite restaurant"
+            value={searchText}
+            onChange={(e) => {
+              //e.target.value -> Whatever we type in input box
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            className="p-2 m-2 bg-gray-400 hover:bg-gray-700 text-white rounded-md float-right items-end lg:w-[20%]"
+            onClick={() => {
+              const data = filterData(searchText, allRestaurants);
+              setFilteredRestaurants(data);
+            }}
+          >
+            Search
+          </button>
+          {/* <input
+    value={user.name}
+    onChange={(e) =>
+      setUser({
+        name: e.target.value,
+        email: "newemail@gmail.com",
+      })
+    }
+  ></input> */}
+        </div>
       </div>
-      <div className="restaurant-List">
+      ;
+      <div className="flex flex-wrap justify-center max-w-[1200px] w-full my-0 mx-auto">
         {filteredRestaurants.length === 0 ? (
-          <h1>Match Not Found</h1>
+          <div className="flex flex-1 justify-center items-center font-mono text-lg">
+            No restaurant found.
+          </div>
         ) : (
           filteredRestaurants.map((restaurant) => {
             return (
